@@ -1,0 +1,43 @@
+Dictionary BatchReactor 
+ { 
+@KineticsPreProcessor	   kinetic-mechanism; 
+@Type					   NonIsothermal-ConstantVolume; 
+@InitialStatus          initial-mixture; 
+@OnTheFlyROPA      ropa; 
+@OnTheFlyPostProcessing post-processing; 
+@EndTime				1.000000e-02 s; 
+ } 
+Dictionary kinetic-mechanism 
+ { 
+@Kinetics           ../aramco/chemAramco.cki; 
+@Thermodynamics		../aramco/thermAramco.ckt; 
+@Output             kinetics; 
+ } 
+Dictionary initial-mixture 
+ { 
+@Temperature   	1290   K; 
+@Pressure      	6100000 Pa; 
+@OxidizerMoleFractions        O2 1 
+                              N2 0; 
+@FuelMoleFractions   CH4 1; 
+@EquivalenceRatio     6.302521e-02; 
+ } 
+Dictionary sensitivity 
+ { 
+     @Type   arrhenius-parameters; 
+    @DenseSolver    Eigen; 
+@DenseFullPivoting     false; 
+     @SubSteps     5; 
+     @Species     OH O2 CH4 CH3; 
+ } 
+Dictionary    ropa 
+ { 
+@Species     CH4 OH O2 H2O2 HO2; 
+@ReferenceSpecies CH4; 
+@Threshold 0.01; 
+@Times     1.150882e-04 s; 
+ }  
+Dictionary    post-processing 
+ { 
+@ReactionRates     129; 
+ } 	
